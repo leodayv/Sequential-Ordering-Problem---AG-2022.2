@@ -6,6 +6,8 @@ Projeto que constituiu a segunda nota da matéria ministrada pelo professor Joã
 - [Davy Leonardo](https://github.com/leodayv)
 - [Genisson Santos](https://github.com/Genisson-santos)
 - [Rafael Oliveira](https://github.com/raffa43)
+#### Professor:
+- [João Paulo](https://github.com/JoaoAlmeida)
 
 Grupo Responsável pelo desafio n° 5 "Sequential ordering problem - (SOP)", 
 disponível em:<br>
