@@ -6,7 +6,6 @@ import geneticFunctions.Parser;
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.Random;
-
 public class GeneticAlgorithm {
     public static void main(String[] args) throws FileNotFoundException {
         Random rd = new Random();
