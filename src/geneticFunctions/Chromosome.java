@@ -1,3 +1,5 @@
+package geneticFunctions;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Random;
@@ -77,7 +79,7 @@ public class Chromosome implements Comparable<Chromosome>{
 
         for (int i = 0; i < dim; i++) {
             if (i == 0) genes[i] = i;
-            if (i == dim-1) genes[i] = i;
+            else if (i == dim-1) genes[i] = i;
             else {
                 if(mask[i]){
                     genes[i] = parent1Genes[i];
@@ -116,7 +118,7 @@ public class Chromosome implements Comparable<Chromosome>{
     }
 
     private double fitnessCalc(){
-        if (isValid()) return (double)1/pathCost() * 2.5;
+        if (isValid()) return (double)1/pathCost() * 10;
         else return (double)1/pathCost();
     }
 

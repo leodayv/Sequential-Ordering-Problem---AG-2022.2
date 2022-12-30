@@ -1,3 +1,8 @@
+package Solutions.esc07;
+
+import geneticFunctions.Chromosome;
+import geneticFunctions.Parser;
+
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.Random;
@@ -5,9 +10,9 @@ import java.util.Random;
 public class GeneticAlgorithm {
     public static void main(String[] args) throws FileNotFoundException {
         Random rd = new Random();
-        int[][] adjMatrix = Parser.parse("esc07.sop");
+        int[][] adjMatrix = Parser.parse("Problems/esc07.sop");
 
-        int runs = 3;
+        int runs = 5;
         Chromosome best = null;
         for(int i = 0; i < runs; i++){
             ArrayList<Chromosome> chromosomes = new ArrayList<>();
@@ -60,7 +65,9 @@ public class GeneticAlgorithm {
                     Chromosome parent2 = chromosomes.get(rd.nextInt(chromosomes.size()));
 
                     boolean[] mask = new boolean[parent1.getDim()];
-
+                    for (int k = 0; k < mask.length; k++) {
+                        mask[k] = rd.nextBoolean();
+                    }
                     Chromosome child1 = new Chromosome(parent1, parent2, mask);
                     if (child1.isValid()) recombinations.add(child1);
 
@@ -71,7 +78,6 @@ public class GeneticAlgorithm {
 
                 chromosomes = newChromosomes;
             }
-
             for (Chromosome chromosome: chromosomes) {
                 if(!chromosome.isValid()){
                     continue;
@@ -89,6 +95,7 @@ public class GeneticAlgorithm {
         }
 
         assert best != null;
+        System.out.println("\n------------Final Chromosome------------");
         System.out.println(best);
     }
 }
