@@ -8,9 +8,9 @@ import java.util.Random;
 public class GeneticAlgorithm {
     public static void main(String[] args) throws FileNotFoundException {
         Random rd = new Random();
-        int[][] adjMatrix = Parser.parse("Problems/esc07.sop");
+        int[][] adjMatrix = Parser.parse("problems/esc07.sop");
 
-        int runs = 5;
+        int runs = 15;
         Chromosome best = null;
         for(int i = 0; i < runs; i++){
             ArrayList<Chromosome> chromosomes = new ArrayList<>();
@@ -23,17 +23,15 @@ public class GeneticAlgorithm {
             int generations = 100;
 
             for (int j = 0; j < generations; j++) {
+                ArrayList<Chromosome> newChromosomes = Selections.tournament(chromosomes, 0.8);
 
+                newChromosomes.addAll(Mutations.simpleInversion(chromosomes, 0.1));
 
-                ArrayList<Chromosome> newChromosomes = Selections.tournament(chromosomes);
-
-
-                newChromosomes.addAll(Mutations.simpleInversion(chromosomes));
-
-                newChromosomes.addAll(Crossover.uniformCrossover(chromosomes));
+                newChromosomes.addAll(Crossover.uniformCrossover(chromosomes, 0.1));
 
                 chromosomes = newChromosomes;
             }
+
             for (Chromosome chromosome: chromosomes) {
                 if(!chromosome.isValid()){
                     continue;

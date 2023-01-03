@@ -93,6 +93,17 @@ public class Chromosome implements Comparable<Chromosome>{
         this.fitness = fitnessCalc();
     }
 
+    public Chromosome(int[] genes, int[][] adjMatrix){
+        this.adjMatrix = adjMatrix;
+        this.dim = adjMatrix[0].length;
+
+        this.genes = genes;
+
+        deleteMults();
+
+        this.fitness = fitnessCalc();
+    }
+
     private void deleteMults(){
         int[] occurrences = new int[genes.length+1];
         for (int gene : genes) {

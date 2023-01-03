@@ -7,8 +7,8 @@ import java.util.Random;
 public class Crossover {
     static Random rd = new Random();
 
-    public static ArrayList<Chromosome> uniformCrossover(ArrayList<Chromosome> chromosomes){
-        int totalRecombinations = (int)Math.round(chromosomes.size() * 0.1);
+    public static ArrayList<Chromosome> uniformCrossover(ArrayList<Chromosome> chromosomes, double percentage){
+        int totalRecombinations = (int)Math.round(chromosomes.size() * percentage);
         ArrayList<Chromosome> recombinations = new ArrayList<>();
 
         while (recombinations.size() < totalRecombinations){

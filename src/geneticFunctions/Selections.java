@@ -1,12 +1,14 @@
 package geneticFunctions;
 
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
 import java.util.Random;
 
 public class Selections {
     static Random rd = new Random();
-    public static ArrayList<Chromosome> tournament(ArrayList<Chromosome> chromosomes){
-        int totalSelections = (int)Math.round(chromosomes.size() * 0.8);
+    public static ArrayList<Chromosome> tournament(ArrayList<Chromosome> chromosomes, double percentage){
+        int totalSelections = (int)Math.round(chromosomes.size() * percentage);
         ArrayList<Chromosome> selections = new ArrayList<>();
 
         while(selections.size() < totalSelections){
@@ -29,22 +31,21 @@ public class Selections {
         return selections;
     }
 
-    public ArrayList<Chromosome> roulette(ArrayList<Chromosome> chromosomes){
+    public static ArrayList<Chromosome> roulette(ArrayList<Chromosome> chromosomes, double percentage){
 
         ArrayList<Chromosome> selections = new ArrayList<>();
-        Random random = new Random();
         double fitnesssum = 0;
 
         for (int i = 0; i < chromosomes.size(); i++) {
             fitnesssum += chromosomes.get(i).getFitness();
         }
-        int totalselections = (int) Math.round(chromosomes.size() * 0.8); //João Paulo utilizou 80% de seleção em sala;
+        int totalselections = (int) Math.round(chromosomes.size() * percentage); //João Paulo utilizou 80% de seleção em sala;
 
         while (selections.size() < totalselections) {
 
             double iSum = 0;
             int j = 0;
-            double alpha = random.nextDouble(fitnesssum);
+            double alpha = rd.nextDouble(fitnesssum);
 
             do {
                 iSum += chromosomes.get(j).getFitness();
@@ -56,4 +57,26 @@ public class Selections {
         return selections;
     }
 
+
+    public static ArrayList<Chromosome> rank(ArrayList<Chromosome> chromosomes, double percentage){
+        Collections.sort(chromosomes);
+
+        double totalSelections = (int)Math.round(chromosomes.size() * percentage);
+        ArrayList<Chromosome> selections = new ArrayList<>();
+
+        double sum = 1.0/(chromosomes.size()-2001);
+
+        while (selections.size() < totalSelections){
+            for (int i = 0; i < chromosomes.size(); i++) {
+                double alpha = rd.nextDouble(sum);
+                double probability = i/chromosomes.size()*(chromosomes.size()-1);
+
+                if (probability <= alpha){
+                    selections.add(chromosomes.get(i));
+                    break;
+                }
+            }
+        }
+        return selections;
+    }
 }
