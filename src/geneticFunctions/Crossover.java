@@ -28,6 +28,44 @@ public class Crossover {
 
         return recombinations;
     }
+    public static ArrayList<Chromosome> singlePoint(ArrayList<Chromosome> chromosomes, double percentage) {
+
+        int totalRecombinations = (int) Math.round(chromosomes.size() * percentage);
+        ArrayList<Chromosome> recombinations = new ArrayList<>();
+
+        while (recombinations.size() < totalRecombinations) {
+            Chromosome parent1 = chromosomes.get(rd.nextInt(chromosomes.size()));
+            Chromosome parent2 = chromosomes.get(rd.nextInt(chromosomes.size()));
+            int[] parent1Genes = parent1.getGenes();
+            int[] parent2Genes = parent2.getGenes();
+
+            int point = rd.nextInt(parent1Genes.length);
+            int[] child1 = new int[parent1Genes.length];
+            int[] child2 = new int[parent1Genes.length];
+
+            for (int i = 0; i < point ; i++) {
+                child1[i] = parent1Genes[i];
+                child2[i] = parent2Genes[i];
+            }
+
+            for (int i = point; i < parent2Genes.length ; i++) {
+                child1[i] = parent2Genes[i];
+                child2[i] = parent1Genes[i];
+            }
+
+            Chromosome C1 = new Chromosome(child1, parent1.getAdjMatrix());
+            Chromosome C2 = new Chromosome(child2, parent2.getAdjMatrix());
+
+            if(C1.isValid()){
+                recombinations.add(C1);
+            }
+            if(C2.isValid()){
+                recombinations.add(C2);
+            }
+
+        }
+        return recombinations;
+    }
 
 
 }
