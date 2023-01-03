@@ -4,6 +4,30 @@ import java.util.ArrayList;
 import java.util.Random;
 
 public class Selections {
+    static Random rd = new Random();
+    public static ArrayList<Chromosome> tournament(ArrayList<Chromosome> chromosomes){
+        int totalSelections = (int)Math.round(chromosomes.size() * 0.8);
+        ArrayList<Chromosome> selections = new ArrayList<>();
+
+        while(selections.size() < totalSelections){
+            ArrayList<Chromosome> tournament = new ArrayList<>();
+
+            for (int k = 0; k < 10; k++) {
+                tournament.add(chromosomes.get(rd.nextInt(chromosomes.size())));
+            }
+            int winnerPos = 0;
+            double winnerFitness = Double.MIN_VALUE;
+
+            for (int k = 0; k < tournament.size(); k++) {
+                if (tournament.get(k).getFitness() > winnerFitness){
+                    winnerPos = k;
+                    winnerFitness = tournament.get(k).getFitness();
+                }
+            }
+            selections.add(tournament.get(winnerPos));
+        }
+        return selections;
+    }
 
     public ArrayList<Chromosome> roulette(ArrayList<Chromosome> chromosomes){
 
