@@ -67,5 +67,69 @@ public class Crossover {
         return recombinations;
     }
 
+    public static ArrayList<Chromosome> orderBasedCrossover(ArrayList<Chromosome> chromosomes, double percentage){
+        int totalRecombinations = (int) Math.round(chromosomes.size() * percentage);
+        ArrayList<Chromosome> recombinations = new ArrayList<>();
+        
+        while (recombinations.size() < totalRecombinations){
+            Chromosome parent1 = chromosomes.get(rd.nextInt(chromosomes.size()));
+            Chromosome parent2 = chromosomes.get(rd.nextInt(chromosomes.size()));
+            int[] parent1Genes = parent1.getGenes();
+            int[] parent2Genes = parent2.getGenes();
 
+            int segmentLength = (int)Math.round(parent1Genes.length/3.0);
+            int segmentPos = rd.nextInt(1, (parent1Genes.length - segmentLength) - 1);
+
+            int[] child1Genes = new int[parent1Genes.length];
+            int[] child2Genes = new int[parent2Genes.length];
+
+            for (int i = segmentPos, j = 0; j < segmentLength; i++, j++) {
+                child1Genes[i] = parent1Genes[i];
+                child2Genes[i] = parent2Genes[i];
+            }
+
+            for (int i = 0; i < child1Genes.length; i++) {
+                if (i == 0){
+                    child1Genes[i] = i;
+                    child2Genes[i] = i;
+                } else if (i == parent1.getDim()-1){
+                    child1Genes[i] = i;
+                    child2Genes[i] = i;
+                }else {
+                    if (child1Genes[i] == 0){
+                        int aux = 0;
+                        int index = 1;
+                        do {
+                            aux = parent2Genes[index++];
+                        }while (contains(child1Genes, aux));
+
+                        child1Genes[i] = aux;
+
+                        index = 1;
+                        aux = 0;
+                        do {
+                            aux = parent1Genes[index++];
+                        }while (contains(child2Genes, aux));
+                        child2Genes[i] = aux;
+                    }
+                }
+            }
+
+            Chromosome child1 = new Chromosome(child1Genes, parent1.getAdjMatrix());
+            Chromosome child2 = new Chromosome(child2Genes, parent2.getAdjMatrix());
+
+            if (child1.isValid()) recombinations.add(child1);
+            if (child2.isValid()) recombinations.add(child2);
+        }
+        return recombinations;
+    }
+
+
+
+    private static boolean contains(int[] nums, int num){
+        for (int j : nums) {
+            if (j == num) return true;
+        }
+        return false;
+    }
 }

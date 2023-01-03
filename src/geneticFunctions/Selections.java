@@ -64,12 +64,12 @@ public class Selections {
         double totalSelections = (int)Math.round(chromosomes.size() * percentage);
         ArrayList<Chromosome> selections = new ArrayList<>();
 
-        double sum = 1.0/(chromosomes.size()-2001);
+        double sum = 1.0/(chromosomes.size()-2.001);
 
         while (selections.size() < totalSelections){
             for (int i = 0; i < chromosomes.size(); i++) {
                 double alpha = rd.nextDouble(sum);
-                double probability = i/chromosomes.size()*(chromosomes.size()-1);
+                double probability = i/(chromosomes.size()*(chromosomes.size()-1));
 
                 if (probability <= alpha){
                     selections.add(chromosomes.get(i));

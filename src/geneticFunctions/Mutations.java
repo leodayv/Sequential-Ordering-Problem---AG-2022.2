@@ -31,41 +31,32 @@ public class Mutations {
             int[] parentGenes = parent.getGenes();
             int dim = parent.getDim();
 
-            int displacementLength = Math.round(parentGenes.length/3);
-            int displacementPos = rd.nextInt(1, (chromosomes.size() - displacementLength) - 1);
-            int[] displacementGenes = new int[displacementLength];
-
-            for (int i = 0, index = displacementPos; i < displacementGenes.length; i++, index++) {
-                displacementGenes[i] = parentGenes[index];
-                parentGenes[index] = 0;
-            }
+            int displacementLength = (int)Math.round(parentGenes.length/3.0);
+            int displacementPos = rd.nextInt(1, (parentGenes.length - displacementLength) - 1);
 
             int[] genes = new int[parentGenes.length];
-            for (int i = 0; i < genes.length; i++) {
-                if (i == 0) genes[i] = i;
-                else if (i == dim-1) genes[i] = i;
-                else {
-                    if (parentGenes[i] == 0){
-                        for (int j = i; j < parentGenes.length; j++) {
-                            if (parentGenes[j] == 0) continue;
-                            else {
-                                genes[i] = parentGenes[j];
-                                parentGenes[j] = -1;
-                                break;
-                            }
-                        }
-                    }else genes[i] = parentGenes[i];
-                }
+            for (int i = displacementPos, j = 0; j < displacementLength; i++, j++) {
+                genes[i] = parentGenes[i];
             }
 
-            for (int i = 0, index = 0; i < genes.length; i++) {
-                if (genes[i] != -1) continue;
+
+            for (int i = 0; i < genes.length; i++) {
+                if (i == 0) genes[i] = i;
+                else if (i == dim - 1) genes[i] = i;
                 else {
-                    genes[i] = displacementGenes[index++];
+                    if (genes[i] == 0){
+                        int aux = 0;
+                        int index = 1;
+                        do {
+                            aux = parentGenes[index++];
+                        }while (contains(genes, aux));
+                        genes[i] = aux;
+                    }
                 }
             }
             Chromosome mutation = new Chromosome(genes, parent.getAdjMatrix());
-            if (mutation.isValid()) mutations.add(mutation);
+            //if (mutation.isValid())
+            mutations.add(mutation);
         }
         return mutations;
     }
@@ -84,5 +75,13 @@ public class Mutations {
         }
 
         return mutations;
+    }
+
+
+    private static boolean contains(int[] nums, int num){
+        for (int j : nums) {
+            if (j == num) return true;
+        }
+        return false;
     }
 }
