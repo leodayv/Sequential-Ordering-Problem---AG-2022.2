@@ -7,12 +7,12 @@ public class Mutations {
     static Random rd = new Random();
     static int totalMutations;
 
-    public static ArrayList<Chromosome> simpleInversion(ArrayList<Chromosome> chromosomes, double percentage){
+    public static ArrayList<Chromosome> simpleInversion(ArrayList<Chromosome> chromosomes, double percentage) {
 
-        totalMutations = (int)Math.round(chromosomes.size() * percentage);
+        totalMutations = (int) Math.round(chromosomes.size() * percentage);
         ArrayList<Chromosome> mutations = new ArrayList<>();
 
-        while (mutations.size() < totalMutations){
+        while (mutations.size() < totalMutations) {
             Chromosome mutation = new Chromosome(chromosomes.get(rd.nextInt(chromosomes.size())));
             if (mutation.isValid()) mutations.add(mutation);
         }
@@ -20,7 +20,7 @@ public class Mutations {
         return mutations;
     }
 
-    public static ArrayList<Chromosome> displacement(ArrayList<Chromosome> chromosomes, double percentage){
+     public static ArrayList<Chromosome> displacement(ArrayList<Chromosome> chromosomes, double percentage){
 
         totalMutations = (int)Math.round(chromosomes.size()*percentage);
         ArrayList<Chromosome> mutations = new ArrayList<>();
@@ -67,6 +67,22 @@ public class Mutations {
             Chromosome mutation = new Chromosome(genes, parent.getAdjMatrix());
             if (mutation.isValid()) mutations.add(mutation);
         }
+        return mutations;
+    }
+
+    public static ArrayList<Chromosome> scramble(ArrayList<Chromosome> chromosomes, double percentage) {
+
+        totalMutations = (int) Math.round(chromosomes.size() * percentage);
+        ArrayList<Chromosome> mutations = new ArrayList<>();
+
+        while (mutations.size() < totalMutations) {
+            Chromosome parent1 = chromosomes.get(rd.nextInt(chromosomes.size()));
+            int[] parent1Genes = parent1.getGenes();
+
+
+
+        }
+
         return mutations;
     }
 }
