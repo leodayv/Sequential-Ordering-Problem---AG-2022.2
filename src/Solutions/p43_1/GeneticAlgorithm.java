@@ -1,6 +1,7 @@
 package Solutions.p43_1;
 
 import geneticFunctions.Chromosome;
+import geneticFunctions.Mutations;
 import geneticFunctions.Parser;
 import geneticFunctions.Selections;
 
@@ -29,7 +30,7 @@ public class GeneticAlgorithm {
             for (int j = 0; j < generations; j++) {
                 ArrayList<Chromosome> newChromosome = new ArrayList<>(Selections.rank(chromosomes, 0.8));
 
-
+                newChromosome.addAll(Mutations.displacement(chromosomes, 0.1));
             }
         }
     }
