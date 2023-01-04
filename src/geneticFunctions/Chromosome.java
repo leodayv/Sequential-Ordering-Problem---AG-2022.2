@@ -129,7 +129,7 @@ public class Chromosome implements Comparable<Chromosome>{
     }
 
     private double fitnessCalc(){
-        if (isValid()) return (double)1/pathCost() * 10;
+        if(isValid()) return (double)1/pathCost() * 100;
         else return (double)1/pathCost();
     }
 

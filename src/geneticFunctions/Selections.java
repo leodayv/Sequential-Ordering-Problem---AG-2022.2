@@ -1,17 +1,16 @@
 package geneticFunctions;
 
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.Collections;
 import java.util.Random;
 
 public class Selections {
     static Random rd = new Random();
-    public static ArrayList<Chromosome> tournament(ArrayList<Chromosome> chromosomes, double percentage){
-        int totalSelections = (int)Math.round(chromosomes.size() * percentage);
+    public static ArrayList<Chromosome> tournament(ArrayList<Chromosome> chromosomes, int popSize){
+
         ArrayList<Chromosome> selections = new ArrayList<>();
 
-        while(selections.size() < totalSelections){
+        while(selections.size() < popSize){
             ArrayList<Chromosome> tournament = new ArrayList<>();
 
             for (int k = 0; k < 10; k++) {
@@ -31,7 +30,7 @@ public class Selections {
         return selections;
     }
 
-    public static ArrayList<Chromosome> roulette(ArrayList<Chromosome> chromosomes, double percentage){
+    public static ArrayList<Chromosome> roulette(ArrayList<Chromosome> chromosomes, int popSize){
 
         ArrayList<Chromosome> selections = new ArrayList<>();
         double fitnesssum = 0;
@@ -39,9 +38,8 @@ public class Selections {
         for (int i = 0; i < chromosomes.size(); i++) {
             fitnesssum += chromosomes.get(i).getFitness();
         }
-        int totalselections = (int) Math.round(chromosomes.size() * percentage); //João Paulo utilizou 80% de seleção em sala;
 
-        while (selections.size() < totalselections) {
+        while (selections.size() < popSize) {
 
             double iSum = 0;
             int j = 0;
@@ -50,26 +48,23 @@ public class Selections {
             do {
                 iSum += chromosomes.get(j).getFitness();
                 j += 1;
-            } while (iSum < alpha && j < chromosomes.size());
-
+            } while (iSum < alpha && j < chromosomes.size()-1);
             selections.add(chromosomes.get(j));
         }
         return selections;
     }
 
 
-    public static ArrayList<Chromosome> rank(ArrayList<Chromosome> chromosomes, double percentage){
+    public static ArrayList<Chromosome> rank(ArrayList<Chromosome> chromosomes, int popSize){
         Collections.sort(chromosomes);
-
-        double totalSelections = (int)Math.round(chromosomes.size() * percentage);
         ArrayList<Chromosome> selections = new ArrayList<>();
 
         double sum = 1.0/(chromosomes.size()-2.001);
 
-        while (selections.size() < totalSelections){
+        while (selections.size() < popSize){
             for (int i = 0; i < chromosomes.size(); i++) {
                 double alpha = rd.nextDouble(sum);
-                double probability = i/(chromosomes.size()*(chromosomes.size()-1));
+                double probability = (double)i/(chromosomes.size()*(chromosomes.size()-1));
 
                 if (probability <= alpha){
                     selections.add(chromosomes.get(i));
@@ -80,16 +75,15 @@ public class Selections {
         return selections;
     }
 
-    public static ArrayList<Chromosome> StochasticUniversalSampling(ArrayList<Chromosome> chromosomes, double percentage){
-        double totalSelections = (int)Math.round(chromosomes.size() * percentage);
+    public static ArrayList<Chromosome> StochasticUniversalSampling(ArrayList<Chromosome> chromosomes, int popSize){
         ArrayList<Chromosome> selections = new ArrayList<>();
 
         double fitnessSum = 0;
         for (int i = 0; i < chromosomes.size(); i++) {
             fitnessSum += chromosomes.get(i).getFitness();
         }
-        while (selections.size() < totalSelections){
-                double meanFitness = (1 / chromosomes.size()) * fitnessSum;
+        while (selections.size() < popSize){
+                double meanFitness = (double)(1 / chromosomes.size()) * fitnessSum;
                 double alpha = rd.nextDouble(0, 1);
                 double sum = chromosomes.get(0).getFitness();
                 double delta = alpha * meanFitness;

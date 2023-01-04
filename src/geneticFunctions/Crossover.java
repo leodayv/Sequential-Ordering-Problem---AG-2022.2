@@ -92,7 +92,7 @@ public class Crossover {
                 if (i == 0){
                     child1Genes[i] = i;
                     child2Genes[i] = i;
-                } else if (i == parent1.getDim()-1){
+                } else if (i == child1Genes.length-1){
                     child1Genes[i] = i;
                     child2Genes[i] = i;
                 }else {
