@@ -1,6 +1,8 @@
 package geneticFunctions;
 
+import java.sql.Array;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Random;
 
 public class Mutations {
@@ -68,7 +70,7 @@ public class Mutations {
         while (mutations.size() < totalMutations) {
             Chromosome parent = chromosomes.get(rd.nextInt(chromosomes.size()));
 
-            int[] parentGenes = parent.getGenes();
+            int[] parentGenes = parent.getGenes().clone();
             int dim = parent.getDim();
             int scrambleLength = (int)Math.round(parentGenes.length/3.0);
             int scramblePos = rd.nextInt(1, (parentGenes.length - scrambleLength) - 1);
@@ -76,16 +78,16 @@ public class Mutations {
             int [] genes = new int[parentGenes.length];
             int [] scramble = new int [scrambleLength];
 
-            for (int i = scramblePos, j = 0; j< scrambleLength ; j++, i++) {
+            for (int i = scramblePos, j = 0; j < scrambleLength ; j++, i++) {
                 scramble[j] = parentGenes[i];
                 parentGenes[i] = 0;
             }
 
-            for (int i = 0; i < scrambleLength ; i++) {
+            for (int i = 0; i < scrambleLength; i++) {
                 int tmp = rd.nextInt(scrambleLength);
-                scramble[i] += scramble[tmp];
-                scramble[tmp] = scramble[i] - scramble[i];
-                scramble[i] = scramble[i] - scramble[i];
+                int aux = scramble[tmp];
+                scramble[tmp] = scramble[i];
+                scramble[i] = aux;
             }
 
             for (int i = 0, j = 0; i < genes.length ; i++) {
@@ -93,12 +95,11 @@ public class Mutations {
                     genes[i] = i;
                 } else if (i == genes.length - 1) {
                     genes[i] = i;
-                    
                 } else {
                     if (parentGenes[i] != 0){
                         genes[i] = parentGenes[i];
-                    } else {
-                        genes[i] = scramble[j++];
+                    }else {
+                        if (scramble[j] != 0 && j+1 < scrambleLength) genes[i] = scramble[j++];
                     }
                 }
 
@@ -107,7 +108,6 @@ public class Mutations {
             if(mutation.isValid()){
                 mutations.add(mutation);
             }
-
         }
 
         return mutations;
