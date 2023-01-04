@@ -79,4 +79,30 @@ public class Selections {
         }
         return selections;
     }
+
+    public static ArrayList<Chromosome> StochasticUniversalSampling(ArrayList<Chromosome> chromosomes, double percentage){
+        double totalSelections = (int)Math.round(chromosomes.size() * percentage);
+        ArrayList<Chromosome> selections = new ArrayList<>();
+
+        double fitnessSum = 0;
+        for (int i = 0; i < chromosomes.size(); i++) {
+            fitnessSum += chromosomes.get(i).getFitness();
+        }
+        while (selections.size() < totalSelections){
+                double meanFitness = (1 / chromosomes.size()) * fitnessSum;
+                double alpha = rd.nextDouble(0, 1);
+                double sum = chromosomes.get(0).getFitness();
+                double delta = alpha * meanFitness;
+                int i = 0;
+                do {
+                    if (delta < sum) {
+                        selections.add(chromosomes.get(i));
+                    }else {
+                        i++;
+                        sum += chromosomes.get(i).getFitness();
+                    }
+                }while (i <chromosomes.size());
+            }
+        return selections;
+    }
 }
