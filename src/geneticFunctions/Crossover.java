@@ -5,13 +5,22 @@ import java.util.ArrayList;
 import java.util.Random;
 
 public class Crossover {
-    static Random rd = new Random();
+    Random rd = new Random();
 
-    public static ArrayList<Chromosome> uniformCrossover(ArrayList<Chromosome> chromosomes, double percentage){
-        int totalRecombinations = (int)Math.round(chromosomes.size() * percentage);
-        ArrayList<Chromosome> recombinations = new ArrayList<>();
+    private int totalRecombinations;
 
-        while (recombinations.size() < totalRecombinations){
+    private ArrayList<Chromosome> chromosomes;
+
+    private ArrayList<Chromosome> recombinations;
+
+    public Crossover(ArrayList<Chromosome> chromosomes) {
+        this.chromosomes = chromosomes;
+        recombinations = new ArrayList<>();
+    }
+
+    public void uniformCrossover(){
+
+        while (recombinations.size() < 2){
             Chromosome parent1 = chromosomes.get(rd.nextInt(chromosomes.size()));
             Chromosome parent2 = chromosomes.get(rd.nextInt(chromosomes.size()));
 
@@ -25,15 +34,10 @@ public class Crossover {
             Chromosome child2 = new Chromosome(parent2, parent1, mask);
             if (child2.isValid()) recombinations.add(child2);
         }
-
-        return recombinations;
     }
-    public static ArrayList<Chromosome> singlePoint(ArrayList<Chromosome> chromosomes, double percentage) {
+    public void singlePoint() {
 
-        int totalRecombinations = (int) Math.round(chromosomes.size() * percentage);
-        ArrayList<Chromosome> recombinations = new ArrayList<>();
-
-        while (recombinations.size() < totalRecombinations) {
+        while (recombinations.size() < 2) {
             Chromosome parent1 = chromosomes.get(rd.nextInt(chromosomes.size()));
             Chromosome parent2 = chromosomes.get(rd.nextInt(chromosomes.size()));
             int[] parent1Genes = parent1.getGenes();
@@ -64,14 +68,10 @@ public class Crossover {
             }
 
         }
-        return recombinations;
     }
 
-    public static ArrayList<Chromosome> orderBasedCrossover(ArrayList<Chromosome> chromosomes, double percentage){
-        int totalRecombinations = (int) Math.round(chromosomes.size() * percentage);
-        ArrayList<Chromosome> recombinations = new ArrayList<>();
-        
-        while (recombinations.size() < totalRecombinations){
+    public void orderBasedCrossover(){
+        while (recombinations.size() < 2){
             Chromosome parent1 = chromosomes.get(rd.nextInt(chromosomes.size()));
             Chromosome parent2 = chromosomes.get(rd.nextInt(chromosomes.size()));
             int[] parent1Genes = parent1.getGenes();
@@ -121,15 +121,15 @@ public class Crossover {
             if (child1.isValid()) recombinations.add(child1);
             if (child2.isValid()) recombinations.add(child2);
         }
-        return recombinations;
     }
-
-
-
-    private static boolean contains(int[] nums, int num){
+    private boolean contains(int[] nums, int num){
         for (int j : nums) {
             if (j == num) return true;
         }
         return false;
+    }
+
+    public ArrayList<Chromosome> getRecombinations() {
+        return recombinations;
     }
 }
