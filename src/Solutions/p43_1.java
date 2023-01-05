@@ -20,9 +20,9 @@ public class p43_1 {
         int generations = 5;
 
         for (int j = 0; j < generations; j++) {
-            ArrayList<Chromosome> newChromosomes = Selections.tournament(chromosomes, popSize);
+            ArrayList<Chromosome> newChromosomes = new ArrayList<>(Selections.tournament(chromosomes, popSize));
 
-            int totalMutationThreads = (int) Math.round(chromosomes.size() * 0.1);
+            int totalMutationThreads = (int)Math.ceil(chromosomes.size()*0.1);
             Mutation[] mutationThreads = new Mutation[totalMutationThreads];
             for (int i = 0; i < totalMutationThreads; i++) {
                 mutationThreads[i] = new Mutation(newChromosomes);
@@ -37,9 +37,9 @@ public class p43_1 {
 
             for (Thread thread : threads) thread.start();
             for (Thread thread : threads) thread.join();
-            for (Mutation mutationThread : mutationThreads) newChromosomes.add(mutationThread.getMutations());
+            for (Mutation mutationThread: mutationThreads) newChromosomes.add(mutationThread.getMutation());
 
-            int totalCrossoverThreads = (int) Math.round(chromosomes.size() * 0.1);
+            int totalCrossoverThreads = (int)Math.ceil(chromosomes.size()*0.95);
             Crossover[] crossoverThreads = new Crossover[totalCrossoverThreads];
 
             for (int i = 0; i < totalCrossoverThreads; i++) {
@@ -48,17 +48,18 @@ public class p43_1 {
             threads = new Thread[totalCrossoverThreads];
             for (int i = 0; i < totalCrossoverThreads; i++) {
                 int num = i;
-                threads[i] = new Thread(() -> crossoverThreads[num].orderBasedCrossover());
+                threads[i] = new Thread(() -> crossoverThreads[num].uniformCrossover());
             }
 
             for (Thread thread : threads) thread.start();
             for (Thread thread : threads) thread.join();
-            for (Crossover crossoverThread : crossoverThreads) newChromosomes.addAll(crossoverThread.getRecombinations());
+            for (Crossover crossoverThread: crossoverThreads) newChromosomes.addAll(crossoverThread.getRecombinations());
 
 
             chromosomes = newChromosomes;
 
             Collections.sort(chromosomes);
+            System.out.println(j+1 + "° Generation finished");
         }
 
         System.out.println("\n------------Final Chromosome------------");

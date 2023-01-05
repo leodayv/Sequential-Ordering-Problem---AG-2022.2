@@ -28,7 +28,7 @@ public class Mutation {
             int[] parentGenes = parent.getGenes();
             int dim = parent.getDim();
 
-            int displacementLength = (int)Math.round(parentGenes.length/3.0);
+            int displacementLength = (int)Math.floor(parentGenes.length/4.0);
             int displacementPos = rd.nextInt(1, (parentGenes.length - displacementLength) - 1);
 
             int[] genes = new int[parentGenes.length];
@@ -61,7 +61,7 @@ public class Mutation {
 
             int[] parentGenes = parent.getGenes().clone();
             int dim = parent.getDim();
-            int scrambleLength = (int)Math.round(parentGenes.length/3.0);
+            int scrambleLength = (int)Math.floor(parentGenes.length/4.0);
             int scramblePos = rd.nextInt(1, (parentGenes.length - scrambleLength) - 1);
 
             int [] genes = new int[parentGenes.length];
@@ -104,7 +104,7 @@ public class Mutation {
         return false;
     }
 
-    public Chromosome getMutations() {
+    public Chromosome getMutation() {
         return mutation;
     }
 }

@@ -10,18 +10,18 @@ public class br17_10 {
     public static void main(String[] args) throws FileNotFoundException, InterruptedException {
         int[][] adjMatrix = Parser.parse("problems/br17.10.sop");
 
-        int popSize = 5000;
+        int popSize = 1000;
         ArrayList<Chromosome> chromosomes = new ArrayList<>();
         while(chromosomes.size() < popSize){
             chromosomes.add(new Chromosome(adjMatrix));
         }
 
-        int generations = 3;
+        int generations = 5;
 
         for (int j = 0; j < generations; j++) {
             ArrayList<Chromosome> newChromosomes = new ArrayList<>(Selections.tournament(chromosomes, popSize));
 
-            int totalMutationThreads = (int)Math.round(chromosomes.size()*0.1);
+            int totalMutationThreads = (int)Math.ceil(chromosomes.size()*0.1);
             Mutation[] mutationThreads = new Mutation[totalMutationThreads];
             for (int i = 0; i < totalMutationThreads; i++) {
                 mutationThreads[i] = new Mutation(newChromosomes);
@@ -36,9 +36,9 @@ public class br17_10 {
 
             for (Thread thread : threads) thread.start();
             for (Thread thread : threads) thread.join();
-            for (Mutation mutationThread: mutationThreads) newChromosomes.add(mutationThread.getMutations());
+            for (Mutation mutationThread: mutationThreads) newChromosomes.add(mutationThread.getMutation());
 
-            int totalCrossoverThreads = (int)Math.round(chromosomes.size()*0.1);
+            int totalCrossoverThreads = (int)Math.ceil(chromosomes.size()*0.95);
             Crossover[] crossoverThreads = new Crossover[totalCrossoverThreads];
 
             for (int i = 0; i < totalCrossoverThreads; i++) {
@@ -58,6 +58,7 @@ public class br17_10 {
             chromosomes = newChromosomes;
 
             Collections.sort(chromosomes);
+            System.out.println(j+1 + "° Generation finished");
         }
 
         System.out.println("\n------------Final Chromosome------------");
