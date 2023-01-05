@@ -77,7 +77,7 @@ public class Crossover {
             int[] parent1Genes = parent1.getGenes();
             int[] parent2Genes = parent2.getGenes();
 
-            int segmentLength = (int)Math.floor(parent1Genes.length/5.0);
+            int segmentLength = (int)Math.floor(parent1Genes.length/4.0);
             int segmentPos = rd.nextInt(1, (parent1Genes.length - segmentLength) - 1);
 
             int[] child1Genes = new int[parent1Genes.length];
