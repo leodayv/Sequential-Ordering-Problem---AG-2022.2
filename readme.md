@@ -9,7 +9,7 @@ Projeto que constituiu a segunda nota da matéria ministrada pelo professor Joã
 #### Professor:
 - [João Paulo](https://github.com/JoaoAlmeida)
 
-Grupo Responsável pelo desafio n° 5 "Sequential ordering problem - (SOP)", 
+Grupo Responsável pelo desafio n°5 "Sequential ordering problem - (SOP)", 
 disponível em:<br>
 [TSPLIB - Sequential ordering problem](http://comopt.ifi.uni-heidelberg.de/software/TSPLIB95/sop/)
 
