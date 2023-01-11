@@ -1,5 +1,5 @@
 ### Algoritimos genéticos 2022.2
-Projeto que constituiu a segunda nota da matéria ministrada pelo professor João Paulo, utilizando a linguaguem Java
+Projeto que constituiu a segunda nota da matéria ministrada pelo professor João Paulo, utilizando a linguaguem Java.
 
 ## Desenvolvedores:
 - [Alysson Gomes](https://github.com/AlyssonGmes)
