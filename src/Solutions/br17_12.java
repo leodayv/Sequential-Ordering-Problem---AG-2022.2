@@ -6,15 +6,14 @@ import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.Collections;
 
-public class esc07 {
+public class br17_12 {
     public static void main(String[] args) throws FileNotFoundException, InterruptedException {
         long start = System.currentTimeMillis();
-        int[][] adjMatrix = Parser.parse("problems/esc07.sop");
-
-        ArrayList<Chromosome> chromosomes = new ArrayList<>();
+        int[][] adjMatrix = Parser.parse("problems/br17.12.sop");
 
         int popSize = 1000;
-        while (chromosomes.size() < popSize){
+        ArrayList<Chromosome> chromosomes = new ArrayList<>();
+        while(chromosomes.size() < popSize){
             chromosomes.add(new Chromosome(adjMatrix));
         }
 

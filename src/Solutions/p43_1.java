@@ -8,6 +8,7 @@ import java.util.Collections;
 
 public class p43_1 {
     public static void main(String[] args) throws FileNotFoundException, InterruptedException {
+        long start = System.currentTimeMillis();
         int[][] adjMatrix = Parser.parse("problems/p43.1.sop");
 
         ArrayList<Chromosome> chromosomes = new ArrayList<>();
@@ -31,8 +32,7 @@ public class p43_1 {
             Thread[] threads = new Thread[totalMutationThreads];
             for (int i = 0; i < totalMutationThreads; i++) {
                 int num = i;
-                if (num % 2 == 0) threads[num] = new Thread(() -> mutationThreads[num].scramble());
-                else threads[num] = new Thread(() -> mutationThreads[num].displacement());
+                threads[num] = new Thread(() -> mutationThreads[num].scramble());
             }
 
             for (Thread thread : threads) thread.start();
@@ -61,8 +61,10 @@ public class p43_1 {
             Collections.sort(chromosomes);
             System.out.println(j+1 + "° Generation finished");
         }
+        long end = System.currentTimeMillis();
 
         System.out.println("\n------------Final Chromosome------------");
-        System.out.println(chromosomes.get(chromosomes.size() - 1));
+        System.out.println(chromosomes.get(chromosomes.size()-1));
+        System.out.println("Total time to complete algorithm: " + (double)(end-start)/1000.0 + " seconds");
     }
 }
