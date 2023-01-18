@@ -1,8 +1,7 @@
 ### Algoritimos genéticos 2022.2
 Projeto que constituiu a segunda nota da matéria ministrada pelo professor João Paulo, utilizando a linguaguem Java.
-
+Apresentado no dia 18/01/2023
 ## Desenvolvedores:
-- [Alysson Gomes](https://github.com/AlyssonGmes)
 - [Davy Leonardo](https://github.com/leodayv)
 - [Genisson Santos](https://github.com/Genisson-santos)
 - [Rafael Oliveira](https://github.com/raffa43)
