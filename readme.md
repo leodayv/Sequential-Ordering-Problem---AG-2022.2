@@ -2,6 +2,7 @@
 Projeto que constituiu a segunda nota da matéria ministrada pelo professor João Paulo, utilizando a linguaguem Java.
 
 ## Desenvolvedores:
+- [Alysson Gomes](https://github.com/AlyssonGmes)
 - [Davy Leonardo](https://github.com/leodayv)
 - [Genisson Santos](https://github.com/Genisson-santos)
 - [Rafael Oliveira](https://github.com/raffa43)
