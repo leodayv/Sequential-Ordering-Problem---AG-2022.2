@@ -144,7 +144,7 @@ public class Chromosome implements Comparable<Chromosome>{
     public boolean isValid(){
         for (int i = 0; i < genes.length; i++) {
             for (int j = 0; j < i; j++) {
-                if (adjMatrix[genes[j]][genes[i]] == -1) {
+                if (adjMatrix[genes[j]][genes[i]] == -1 || adjMatrix[genes[j]][genes[i]] == 0) {
                     return false;
                 }
             }
